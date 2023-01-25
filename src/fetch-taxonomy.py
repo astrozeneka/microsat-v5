@@ -18,7 +18,7 @@ list.forEach(item=>{
         ])
 })
     return output""")
-    oufile_name=f"data/taxonomy-list/{os.path.basename(genome[4])}-{slugify.slugify(genome[0])}.tsv"
+    oufile_name=f"data/genome-taxonomy-list/{os.path.basename(genome[4])}-{slugify.slugify(genome[0])}.tsv"
     with open(oufile_name, "w") as f:
         f.write("\n".join(["\t".join(a) for a in output]))
     return output
