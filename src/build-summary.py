@@ -46,12 +46,13 @@ if __name__ == '__main__':
                 entry_data["chromosome-length"]=len([c for c in chromosome_data if c[0].lower() != "MT" and c[0] != "-"])
 
                 sex_chromosomes=[a[0] for a in chromosome_data if a[0].lower() in "xyzw"]
+                entry_data["ncbi-access-id"]=os.path.basename(genome[4])
                 entry_data["sex-chromosomes"]=','.join(sex_chromosomes)
                 subgroup_report.append(entry_data)
 
 
         # Build the outfile table
-        output=[["Class", "Order", "Family", "Specie", "Chromosomes available for use", "Sex chromosomes", "Eligibility"]]
+        output=[["Class", "Order", "Family", "Specie", "Chromosomes available for use", "Sex chromosomes", "Eligibility", "NCBI Access ID"]]
         for genome in subgroup_report:
             entry=[]
             entry.append(genome["class"] if "class" in genome.keys() else "")
@@ -60,11 +61,11 @@ if __name__ == '__main__':
             entry.append(genome["species"] if "species" in genome.keys() else "")
             entry.append(genome["chromosome-length"] if "chromosome-length" in genome.keys() else 0)
             entry.append(genome["sex-chromosomes"] if "sex-chromosomes" in genome.keys() else "")
-
             # Conditionnal values
             if entry[-2]==0:
                 continue
             entry.append("YES" if entry[-2]>0 and len(entry[-1])>0 else "NO")
+            entry.append(genome["ncbi-access-id"] if "ncbi-access-id" in genome.keys() else "")
             output.append(entry)
 
         # Write in file
